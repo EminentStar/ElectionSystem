@@ -1,0 +1,118 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<!-- script src="http://code.jquery.com/jquery-1.9.1.min.js"></script-->
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="<spring:url value="/js/jquery/plugin/validation/jquery.validate.min.js" />"></script>
+<script type="text/javascript" src="<spring:url value="/js/jquery/plugin/storage/jquery.storageapi.min.js" />"></script>
+<script type="text/javascript">
+   //$.sessionStorage.set('test',{a:'val'});
+   var key = "message.properties";
+   //제이슨으로 서버에서 받아오고 하면 될거 같아요!
+   
+   if($.sessionStorage.isEmpty(key)){//뭐 하나만들죠?
+      $.get('<spring:url value="/rsc/i18n" />',
+            {},
+            function(response){
+               $.sessionStorage.set(key,response);   
+            });
+   }
+   
+   //빼서 쓰는 메소드 하나 만들어보죠!
+    /* function getMessage(code){
+      var messages = $.sessionStorage.get(key);
+      return eval("messages."+ code);//꼭 외워야하는 스크립트 함수? eval?? 
+   } */
+    
+   var validation = {
+         //위의 getMessage메서드를 여기 집어넣음
+          getMessage : function(code, args){ //code1을 하나더받자! 자바스크립트는 매개변수에 없으면 그냥 없다고 취급
+             if(args == undefined){
+            return eval("$.sessionStorage.get('"+key + "')."+code.replace(/[.]/g,"_"));
+            //$.sesstionStorage.get(key).label_name; 와 같은 의미다
+             }else{
+                /* console.log(code);
+                console.log(args); */
+                   var msg = this.getMessage(code);
+                for(var i=0;i<args.length;i++){
+                  msg = msg.replace("{" + i + "}", isNaN(args[i])?this.getMessage(args[i]) : args[i]);
+                }
+                return msg;
+             }
+         },
+         showMessage : function(errors , labelPrefix){ //여기서 에러를 받�
+            //console.log($(labelPrefix + "name").text().trim()+ "_trim");��
+            var parent = this; //each 밖에서 parent선언해주고 쓰자!
+            //alert(this.getMessage("label_name"));
+            $(errors).each(function(index, error){
+               //console.log(error);
+               var args = error.arguments;
+               var code = error.code;
+               var field = error.field;
+               var label = $(labelPrefix + field).text().trim();
+               //var label = $("td#label_"+field).text(); //이런것들은html페이지마다 조금씩틀려질수있기에 파라미터로 받는게좋다
+               label = label.length >0 ? label : labelPrefix;
+               var msg = parent.getMessage(code + "_general");
+               //에러 매개변수의 갯수에 맞게 {0} 등을 치환하자!               
+               if(args.length == 3){
+                  //length같은경우는 두개를 바궈야되죠?
+                  //length같은경우 3개가들어가니깐 총 3개를 바꾸겠다!
+                     msg = msg.replace("{0}",label).replace("{1}",args[2])
+                     .replace("{2}",args[1]);
+               }else if(args.length == 2){
+                     msg = msg.replace("{0}" , label).replace("{1}",args[1]);
+               }
+               else{
+                  msg = msg.replace("{0}",label);
+               }
+               $("#"+field).focus();
+               alert(msg);
+               
+               return false; //return false네요!
+            });
+         }
+   };
+   
+   
+   var vs = {
+         config:{
+            contextRoot : "<spring:url value="/" />"
+         },
+         session : {
+            user: { 
+               id : "${userInfo.username}",
+               name: "${userInfo.users_name}",
+               cellPhone : "${userInfo.cell_phone}",
+               email : "${userInfo.email}",
+               dept_code : "${userInfo.dept_code}",
+               role : [<c:forEach var="val" items="${userInfo.role}">'<c:out value="${val}" />' ,</c:forEach> ]
+               //c 태그 쓰겠다고 선언을 해야함!
+            }
+         }
+   }
+   
+   /*
+   vs.config = {
+      contextRoot: "#springUrl("/")",
+      locale: "${locale}",
+      country: "${locale.getCountry()}",
+      language: "${language}"
+   };
+   vs.session.user = {
+      id: "$!{userSession.detail.username}",
+      name: "$!{userSession.detail.name}",
+      //role: [#foreach($role in $userSession.detail.role)#if ($foreach.count > 1),#end"${role}"#end],
+      mfCode: "$!{userSession.detail.mfCode}",
+      mfName: "$!{userSession.detail.mfName}",
+      dtCode: "$!{userSession.detail.dtCode}",
+      dtName: "$!{userSession.detail.dtName}",
+      workNo: "$!{userSession.detail.workNo}",
+      ceoName: "$!{userSession.detail.ceoName}",
+      address: "$!{userSession.detail.address}",
+      tel: "$!{userSession.detail.tel}",
+      fax: "$!{userSession.detail.fax}",
+      email: "$!{userSession.detail.email}"   
+   };   //주석처리하고 제이쿼리 cdn복사해서 붙여넣어주세요
+   */
+</script>
+   

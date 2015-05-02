@@ -1,0 +1,46 @@
+package net.javabugs.web.example.service;
+
+import java.util.List;
+
+import net.javabugs.web.example.model.dao.PledgeDAO;
+import net.javabugs.web.example.model.dto.ElectedPledge;
+import net.javabugs.web.example.model.dto.Pledge;
+import net.javabugs.web.example.model.dto.PledgeParam;
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class PledgeService {
+	
+	@Autowired
+	private PledgeDAO pledgeDAO;
+
+	
+	public JSONObject getPlegeList(PledgeParam pledgeParam) {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		List<Pledge> pledgeList = null;
+		
+		int count = pledgeDAO.getCountPledgeList(pledgeParam);
+		
+		if(count >0){
+			pledgeList = pledgeDAO.getPledgeList(pledgeParam);
+		}
+		
+		json.accumulate("pledgeList",pledgeList);
+		return json;
+	}
+	
+	public Pledge getPledge(PledgeParam pledgeParam){
+		return pledgeDAO.getPledge(pledgeParam);
+	}
+
+	public List<ElectedPledge> getElectedPledgeList() {
+		
+		return pledgeDAO.getElectedPledgeList();
+	}
+
+}

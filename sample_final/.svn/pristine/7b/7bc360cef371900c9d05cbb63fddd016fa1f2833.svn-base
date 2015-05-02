@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Join">
+	<select id="checkCid" parameterType="JoinParam" resultType="int" >
+	 SELECT COUNT(*)  
+     FROM USERS   
+	 WHERE CID = #{cid}
+	</select> 
+	
+	<insert id="createUser" parameterType="JoinParam" >
+		INSERT INTO USERS
+		( CID 
+		 ,PASSWD 
+		 ,NAME 
+		 ,CELL_PHONE 
+		 ,EMAIL 
+		 ,CRT_ID 
+		 ,CRT_DTTM)
+		 VALUES 
+		 (#{cid} 
+		 ,#{passwd}
+		 ,#{name} 
+		 ,#{cellPhone} 
+		 ,#{email} 
+		 ,#{cid} 
+		 ,SYSDATE )
+		
+	</insert>
+	
+	<insert id="createUserAuthority" parameterType="JoinParam">
+		 INSERT INTO AUTHORITIES 
+		  ( 
+		   USERNAME 
+		  ,AUTHORITY 
+		  ) 
+		  VALUES 
+		  ( 
+		  #{cid} 
+		 ,#{role} 
+		  ) 
+	</insert>
+	
+	<select id="checkWorkNo" parameterType="JoinParam" resultType="int">
+	    SELECT COUNT(mf_code)
+	      FROM manufacturers mf
+	     WHERE mf.work_no = #{workNo}
+	</select>
+	
+	
+	
+</mapper>

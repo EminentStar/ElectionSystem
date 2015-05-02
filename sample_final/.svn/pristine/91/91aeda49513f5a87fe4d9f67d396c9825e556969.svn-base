@@ -1,0 +1,76 @@
+package net.javabugs.web.example.model.dao.impl;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import net.javabugs.web.example.model.dao.PledgeDAO;
+import net.javabugs.web.example.model.dto.ElectedPledge;
+import net.javabugs.web.example.model.dto.Pledge;
+import net.javabugs.web.example.model.dto.PledgeParam;
+import net.sf.json.JSONObject;
+
+@Repository
+public class PledgeDAOImpl extends  SqlSessionDaoSupport implements PledgeDAO{
+	
+	@Override
+	public List<Pledge> getPledgeList(PledgeParam param) {
+		// TODO Auto-generated method stub
+		//return getSqlSession().selectList("net.javabugs.web.example.model.mapper.Bbs.getPostList"
+		//,param);
+		return getSqlSession().selectList("net.javabugs.web.example.model.mapper.Pledge.getPledgeList",param);
+	}
+	
+	@Override
+	public int getCountPledgeList(PledgeParam pledgeParam) {
+		// TODO Auto-generated method stub
+		return (int) getSqlSession().selectOne("net.javabugs.web.example.model.mapper.Pledge.getCountPledgeList",pledgeParam);
+	}
+
+	@Override
+	public Pledge getPledge(PledgeParam pledgeParam) {
+		// TODO Auto-generated method stub
+		return (Pledge) getSqlSession().selectOne("net.javabugs.web.example.model.mapper.Pledge.getPledge",pledgeParam);
+	}
+
+	@Override
+	public int getCountElectedPledgeList() {
+		return (int) getSqlSession().selectOne("net.javabugs.web.example.model.mapper.Pledge.getCountElectedPledgeList");
+	}
+
+
+	@Override
+	public int deleteCandi(PledgeParam pledgeParam) {
+		// TODO Auto-generated method stub
+		return getSqlSession().delete("net.javabugs.web.example.model.mapper.Pledge.deletePledge",pledgeParam);
+	
+	}
+
+	@Override
+	public int updatePledge(PledgeParam pledgeParam) {
+		return getSqlSession().update("net.javabugs.web.example.model.mapper.Pledge.updatePledge",pledgeParam);
+		
+	}
+
+	@Override
+	public List<ElectedPledge> getPledgeCheckList(ElectedPledge electedPledge) {
+		return getSqlSession().selectList("net.javabugs.web.example.model.mapper.Pledge.getElectedPledgeList");
+	}
+
+	@Override
+	public int insertPledge(PledgeParam param) {
+		// TODO Auto-generated method stub
+		return (int) getSqlSession().insert("net.javabugs.web.example.model.mapper.pledge.insertPledge", param);
+		
+	}
+
+	@Override
+	public int checkPledge(PledgeParam param) {
+		// TODO Auto-generated method stub
+		return (int) getSqlSession().insert("net.javabugs.web.example.model.mapper.pledge.checkCandid", param);
+	}
+
+
+}

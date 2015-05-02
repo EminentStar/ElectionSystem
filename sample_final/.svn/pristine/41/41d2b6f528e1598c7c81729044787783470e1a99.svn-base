@@ -1,0 +1,21 @@
+#cand_introduce {
+		font-family: "¸¼Àº °íµñ";
+		height: 648px;
+		width: 778px;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	#vote {
+		height: 30px;
+		width: 700px;
+		font-family: "¸¼Àº °íµñ";
+		font-size: 14px;
+		font-weight: bolder;
+		background-color: #FA5341;
+	
+		border-top-color: #FFFFFF;
+		border-right-color: #FFFFFF;
+		border-bottom-color: #FFFFFF;
+		border-left-color: #FFFFFF;
+		color: #FFF;
+	}

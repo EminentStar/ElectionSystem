@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+
+.candipageWrap {
+	width: 800px;
+	margin: auto;
+}
+.candipageWrap {
+}
+.candiTitle {
+	width: 100%;
+	margin: auto;
+}
+.candiWrap {
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+}
+.candicontent {
+	width: 33.33%;
+	float: left;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+	padding-top: 10px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+}
+.detailcontent {
+	width: 100%;
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.pledgecontent {
+	width: 100%;
+	float: left;
+}
+.detailTitle {
+	width: 100%;
+	float: left;
+}
+.votebutton {
+	width: 100%;
+	float: left;
+	margin-bottom: 20px;
+}
+
+.button1 {
+	background-color:#FF4D4D;
+	border:2px solid #83c41a;
+	color:#ffffff;
+	font-family:"맑은 고딕";
+	font-size:40px;
+	font-weight:bold;
+	width:100%;
+	text-decoration:none;
+	text-align:center;
+	padding-bottom: 15px;
+}
+.button1:hover {	
+	background-color:#a5cc52;
+	cursor: pointer;
+}

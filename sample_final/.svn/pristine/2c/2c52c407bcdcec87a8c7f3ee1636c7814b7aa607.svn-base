@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Join">
+	<select id="checkCid" parameterType="JoinParam" resultType="int" >
+	 SELECT COUNT(*)  
+     FROM USERS   
+	 WHERE USER_ID = #{user_id}
+	</select> 
+	
+	<insert id="createUser" parameterType="JoinParam" >
+		 INSERT INTO USERS 
+		 ( user_id 
+		  ,passwd
+		  ,dept_code 
+		  ,users_name 
+		  ,cell_phone 
+		  ,student_check 
+		  ,crt_id 
+		  ,crt_dttm
+		  
+		   ) 
+		   VALUES 
+		  ( #{user_id} 
+		   ,#{passwd}
+		   ,#{dept_code}
+		   ,#{users_name}
+		   ,#{cell_Phone}
+		   ,#{student_check}
+		   ,#{user_id}
+		   ,SYSDATE ) 
+	
+	</insert>
+	
+	<insert id="createUserAuthority" parameterType="JoinParam">
+		 INSERT INTO USERS 
+		   (
+		  	AUTHORITIES_CODE 
+		   )
+		 VALUES  
+		 (
+		  #{authorities_code}
+		  )
+	</insert>
+	<select id="getUserInformation"	parameterType="java.lang.String" resultType="JoinParam">
+		SELECT USER_ID as user_id 
+			  ,DEPT_CODE as dept_code
+			  ,USERS_NAME as users_name 
+			  ,PASSWD as passwd 
+			  ,CELL_PHONE as cell_Phone
+	 	FROM USERS 
+	 	WHERE USER_ID = #{id}
+	</select>
+	<update id="updateUserInformation">
+		UPDATE INTO
+	</update>
+</mapper>

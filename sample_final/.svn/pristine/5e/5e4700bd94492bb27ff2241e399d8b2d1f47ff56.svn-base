@@ -1,0 +1,16 @@
+package net.javabugs.web.example.model.dto;
+
+public class CheckParam {
+	
+	public String checkname;
+
+	public String getCheckname() {
+		return checkname;
+	}
+
+	public void setCheckname(String checkname) {
+		this.checkname = checkname;
+	}
+	
+
+}

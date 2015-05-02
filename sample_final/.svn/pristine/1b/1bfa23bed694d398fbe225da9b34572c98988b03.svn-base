@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Join">
+	<select id="checkCid" parameterType="JoinParam" resultType="int" >
+	 SELECT COUNT(*)  
+     FROM USERS   
+	 WHERE USER_ID = #{user_id}
+	</select> 
+	
+	<insert id="createUser" parameterType="JoinParam" >
+		 INSERT INTO USERS 
+		 ( USER_ID
+		  ,PASSWD
+		  ,DEPT_CODE 
+		  ,USERS_NAME
+		  ,CELL_PHONE 
+		  ,STUDENT_CHECK
+		  ,EMAIL 
+		  ,CRT_ID
+		  ,CRT_DTTM 
+		  
+		   ) 
+		   VALUES 
+		  ( #{user_id} 
+		   ,#{passwd}
+		   ,#{dept_code}
+		   ,#{users_name}
+		   ,#{cell_Phone}
+		   ,1
+		   ,#{email}
+		   ,#{user_id}
+		   ,SYSDATE ) 
+	
+	</insert>
+	
+	<insert id="createUserAuthority" parameterType="JoinParam">
+		 INSERT INTO AUTHORITIES 
+		   (
+		   	USERNAME,
+		  	AUTHORITY
+		   )
+		 VALUES  
+		 (
+		  #{user_id},
+		  #{authorities_code}
+		  )
+
+	</insert>
+	
+	<select id = "getCountDeptList" parameterType="JoinParam" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT
+	</select>
+	
+	<select id = "getDeptList" resultType="DeptParam">
+		SELECT DEPT_CODE as dept_code
+			  ,DEPT_NAME as dept_name
+	 	FROM DEPARTMENT
+	</select>
+	
+	<select id="getUserInformation"	parameterType="java.lang.String" resultType="JoinParam">
+		SELECT USER_ID as user_id 
+			  ,DEPT_CODE as dept_code
+			  ,USERS_NAME as users_name 
+			  ,PASSWD as passwd 
+			  ,CELL_PHONE as cell_Phone
+			  ,EMAIL as email
+	 	FROM USERS 
+	 	WHERE USER_ID = #{id}
+	</select>
+	<update id="updateUserInformation" parameterType="JoinParam">
+		UPDATE USERS SET  
+		<choose>
+			<when test="passwd != null">
+				PASSWD = #{passwd}, 
+			</when><!--폼의 새 비밀번호를 joinParam의 passwd로 넣어야한다.  -->
+		</choose><!--그리고 학과코드는 DAOImpl에서 넣어주기로 하자  -->
+		CELL_PHONE = #{cell_Phone} 
+	   ,DEPT_CODE = #{dept_code}
+	   ,UPD_ID = #{user_id}
+	   ,UPD_DTTM = SYSDATE  
+		WHERE USER_ID = #{user_id}
+	</update>
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Candi">
+
+	<sql id = "selectCandiSql">
+		   C.CAND_ID, 
+		   C.USER_ID, 
+		   C.USER_NAME, 
+		   C.DEPT_CODE, 
+		   C.PROFILE, 
+		   U.USER_ID, 
+		   C.CRT_ID, 
+		   C.CRT_DTTM, 
+		   C.FID, 
+		   F.FILENAME, 
+		   F.FILEPATH
+	</sql>
+	<sql id = "fromCandiSql">
+		FROM CANDIDATE C INNER JOIN USERS U ON U.USER_ID = C.CRT_ID 
+				 LEFT OUTER JOIN CANDIATTACHED_FILE F ON F.FID = C.FID
+	</sql>
+	<select id ="getCountCandiList" parameterType="CandiParam"  resultType="int" >
+		SELECT COUNT(*) AS totRowCnt
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+	</select>
+	<select id="getCandiList" parameterType="CandiParam" resultType="Candi">
+		SELECT CAND_ID as cand_id
+			  ,USER_ID as user_id
+			  ,USER_NAME as user_name
+			  ,PROFILE as profile 
+			  ,FID as fid 
+		FROM CANDIDATE
+		ORDER BY CAND_ID ASC
+	</select>
+	<select id="getCandi" parameterType="CandiParam" resultType="Candi">
+		SELECT
+		<include refid="net.javabugs.web.example.model.mapper.Candi.selectCandiSql"/>
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+		WHERE C.CAND_ID = #{cand_id} AND F.SUB_FID=1
+	
+	</select>
+	<select id="getCandidetail" parameterType="CandiParam" resultType="Candi">
+		SELECT
+		<include refid="net.javabugs.web.example.model.mapper.Candi.selectCandiSql"/>
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+		WHERE C.CAND_ID = #{cand_id}
+	
+	</select>
+	<select id="getpCandi" parameterType="CandiParam" resultType="Candi">
+		SELECT F.FILENAME AS pfilename, F.FILEPATH AS pfilepath
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+		WHERE C.CAND_ID = #{cand_id} AND F.SUB_FID=2
+	
+	</select>
+	<select id="checkcand_id" parameterType="CandiParam" resultType="int" >
+	 SELECT COUNT(*)  
+     FROM USERS   
+	 WHERE USER_ID = #{user_id}
+	</select> 
+	<delete id="deleteCandi" parameterType="CandiParam">
+		DELETE FROM CANDIDATE WHERE CAND_ID=#{cand_id}
+	</delete>
+	<delete id="deleteCandiAttach" parameterType="CandiParam">
+		DELETE FROM CANDIATTACHED_FILE WHERE FID=#{cand_id}
+	</delete>
+	<delete id="deleteCandiVote" parameterType="CandiParam">
+		DELETE FROM VOTE WHERE CAND_ID=#{cand_id}
+	</delete>
+	<delete id="deletePledge" parameterType="CandiParam">
+		DELETE FROM PLEDGE WHERE CAND_ID=#{cand_id}
+	</delete>
+	
+	<update id="updateCandi" parameterType="CandiParam">
+	UPDATE CANDIDATE SET
+		
+		USER_NAME=#{user_name}
+		,USER_ID=#{user_id}
+		,PROFILE=#{profile}
+		,UPD_ID = #{updId}
+		,UPD_DTTM =SYSDATE
+		
+	WHERE CAND_ID=#{cand_id}
+	   
+	
+	</update>
+	<insert id="insertCandi" parameterType="Candi">
+		<selectKey keyProperty="dept_code" order="BEFORE" resultType="java.lang.String" > 
+		
+		 	SELECT DEPT_CODE FROM USERS WHERE USER_ID=#{user_id}
+		 	
+    	</selectKey>
+	INSERT INTO CANDIDATE
+	(
+	   CAND_ID
+	 , USER_NAME
+	 , USER_ID
+	 , PROFILE
+	 , DEPT_CODE
+	 , FID
+	 , CRT_ID
+	 , CRT_DTTM
+
+	)
+	VALUES
+	(
+      #{cand_id}
+      ,#{user_name}
+      ,#{user_id}
+      ,#{profile}
+      ,#{dept_code}
+      ,#{cand_id}
+      ,#{user_id}
+      ,SYSDATE
+	)		
+	</insert>
+	<select id="getCandidateIntroduce" parameterType="CandiParam" resultType="Candi">
+		SELECT C.CAND_ID as cand_id
+			  ,C.USER_ID as user_id
+			  ,C.USER_NAME as user_name
+			  ,C.PROFILE as profile 
+			  ,C.FID as fid 
+			  ,F.FILENAME as filename 
+			  ,F.FILEPATH as filepath 
+
+		FROM CANDIDATE C, CANDIATTACHED_FILE F 
+		WHERE C.FID = F.FID AND F.SUB_FID=1
+
+
+		ORDER BY C.CAND_ID ASC
+	</select>
+	<select id= "getPledgeList" parameterType="CandiParam" resultType="Pledge">
+		SELECT C.CAND_ID  as cand_id , 
+			   C.USER_NAME as user_name, 
+			   P.PLEDGE_ID as pledge_id ,
+			   P.PLEDGE_CONTENTS as pledge_contents,  
+			   P.PLEDGE_TITLE as pledge_title
+		FROM CANDIDATE C INNER JOIN PLEDGE P ON C.CAND_ID = P.CAND_ID		   
+		WHERE C.CAND_ID = #{cand_id}
+	</select>
+	<select id="getCandidatePoster" parameterType="CandiParam" resultType="Candi">
+	<!--    나는 지금 CANDIDATE테이블의 CAND_ID 만 가지고 있다 그리고 이 CAND_ID를 가지고 CANDIDATE테이블의 FID와 CANDIATTACHED_FILE의 FID가 같은거중에서 SUB_FID가 2번인 애의 FID와 FILEPATH를 뽑아야한다.?
+			그리고 CANDIDATE테이블의 PROFILE 칼럼도 뽑아야한다.  -문제점이우리의 file/download 리퀘스트매핑으로 인해 파일을 불러올수있는데 이건지금 url매핑이 잘못되어있다.
+			SELECT C.PROFILE,F .FID, F.SUB_FID, F.FILEPATH, F.FILENAME
+			FROM CANDIDATE C, CANDIATTACHED_FILE F
+			WHERE C.CAND_ID = 1 AND C.FID = F.FID -->
+		SELECT C.PROFILE as profile 
+			  ,F.FID as fid
+			  ,F.SUB_FID as sub_fid
+			  ,F.FILEPATH as filepath
+			  ,F.FILENAME as filename
+		FROM CANDIDATE C, CANDIATTACHED_FILE F
+		WHERE C.CAND_ID  = #{cand_id} AND C.FID = F.FID AND SUB_FID = 2
+	</select>
+	<insert id="insertAttachFile" parameterType="Candi">
+		
+		INSERT INTO CANDIATTACHED_FILE
+				 ( 
+				 FID 
+				 ,FILENAME 
+				 ,FILEPATH 
+				 ,SUB_FID
+				 ) 
+				 VALUES 
+				 ( 
+				  #{cand_id} 	
+				 ,#{filename} 	
+				 ,#{filepath} 
+				 ,1	
+				 ) 
+	</insert>
+	<insert id="insertPAttachFile" parameterType="Candi">
+		INSERT INTO CANDIATTACHED_FILE
+				 ( 
+				 FID 
+				 ,FILENAME 
+				 ,FILEPATH 
+				 ,SUB_FID
+				 ) 
+				 VALUES 
+				 ( 
+				  #{cand_id} 	
+				 ,#{filename} 	
+				 ,#{filepath} 
+				 ,2
+				 ) 
+	</insert>
+	
+	<update id="setElectPerson" parameterType="CandiParam">
+		UPDATE CANDIDATE SET 
+			CAND_ID = 0
+		WHERE CAND_ID = #{cand_id}
+	</update>
+	
+	<update id="setPledge" parameterType="CandiParam">
+		UPDATE PLEDGE SET
+			CAND_ID = 0 
+		WHERE CAND_ID = #{cand_id} 
+	</update>
+	<update id="setElectedPledge" parameterType="CandiParam">
+		INSERT INTO ELECTED_PLEDGE 
+			(PLEDGE_ID
+			,CAND_ID
+			,PLEDGE_TITLE
+			,PLEDGE_CONTENTS
+			,PERFORMANCE_CHECK
+			,CRT_ID
+			,CRT_DTTM
+			) 
+		SELECT 
+			PLEDGE_ID
+		   ,0
+		   ,PLEDGE_TITLE
+		   ,PLEDGE_CONTENTS
+		   ,0 
+		   ,#{user_id}
+		   ,SYSDATE 
+		FROM PLEDGE 
+		WHERE CAND_ID = 0
+	</update>
+	<delete id="deleteElectedPerson">
+		DELETE FROM CANDIDATE
+		WHERE CAND_ID = 0 
+	</delete>
+	<delete id="deleteElectedPledge">
+		DELETE FROM ELECTED_PLEDGE
+		WHERE CAND_ID = 0
+	</delete>
+</mapper>

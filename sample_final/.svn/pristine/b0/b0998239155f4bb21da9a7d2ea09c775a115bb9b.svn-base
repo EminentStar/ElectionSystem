@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Pledge">
+	
+	<sql id = "selectPledgeSql">
+		C.CAND_ID,
+		C.USER_ID,
+		C.USER_NAME,
+		C.DEPT_CODE,
+		C.PROFILE,
+		C.CRT_ID,
+		P.CRT_DTTM,
+		P.PLEDGE_ID,
+		P.PLEDGE_CONTENTS,
+		P.PLEDGE_TITLE
+	</sql>
+	
+	<sql id ="fromPledgeSql">
+		FROM CANDIDATE C INNER JOIN PLEDGE P ON C.CAND_ID = P.CAND_ID
+	</sql>
+	
+	<select id ="getCountPledgeList" parameterType="PledgeParam" resultType="int">
+		SELECT COUNT(*) AS totRowCnt
+		<include refid="net.javabugs.web.example.model.mapper.Pledge.fromPledgeSql"/>
+	</select>
+	
+	<select id= "getPledgeList" parameterType="PledgeParam" resultType="Pledge">
+		SELECT C.CAND_ID  as cand_id , 
+			   P.PLEDGE_TITLE as pledge_title, 
+			   C.USER_NAME AS user_name,
+			   P.PLEDGE_ID as pledge_id
+		<include refid="net.javabugs.web.example.model.mapper.Pledge.fromPledgeSql"/>		   
+	
+	</select>
+	
+	<select id="getPledge" parameterType="PledgeParam" resultType="Pledge">
+		SELECT
+		<include refid="net.javabugs.web.example.model.mapper.Pledge.selectPledgeSql"/>
+		<include refid="net.javabugs.web.example.model.mapper.Pledge.fromPledgeSql"/>
+		WHERE C.CAND_ID = #{cand_id} and P.PLEDGE_ID = #{pledge_id}
+		
+	</select>
+	
+	<update id="updatePledge" parameterType="PledgeParam">
+	UPDATE PLEDGE SET
+		
+		CAND_ID = #{cand_id},
+		PLEDGE_ID = #{pledge_id},
+		PLEDGE_TITLE = #{pledge_title},
+		PLEDGE_CONTENTS = #{pledge_contents},
+		UPD_DTTM = SYSDATE,
+		UPD_ID = #{updId}
+		
+	WHERE CAND_ID=#{cand_id} AND PLEDGE_ID=#{pledge_id}
+
+	</update>
+	
+	<insert id="insertPledge" parameterType="PledgeParam">
+		INSERT INTO PLEDGE
+		(
+			CAND_ID,
+			PLEDGE_ID,
+			PLEDGE_TITLE,
+			PLEDGE_CONTENTS,
+			CRT_ID,
+			CRT_DTTM
+		)
+		VALUES
+		(
+			#{cand_id},
+			#{pledge_id},
+			#{pledge_title},
+			#{pledge_contents},
+			#{crtId},
+			SYSDATE
+		
+		)
+		
+	</insert>
+	
+	
+	<delete id="deletePledge" parameterType="PledgeParam">
+		DELETE FROM PLEDGE WHERE CAND_ID=#{cand_id} AND PLEDGE_ID=#{pledge_id}
+	</delete>
+	
+	<select id="getCountElectedPledgeList" resultType="int">
+		SELECT COUNT(*)
+		FROM ELECTED_PLEDGE
+	</select>
+		
+
+ 	<select id="getElectedPledgeList" resultType="ElectedPledge">
+
+		SELECT CAND_ID  as cand_id , 
+			   PLEDGE_TITLE as pledge_title, 
+			   PLEDGE_ID as pledge_id ,
+			   PLEDGE_CONTENTS as pledge_contents ,
+			   PERFORMANCE_CHECK as performance_check,   
+			   PERFORMANCE_CONTENTS as performance_contents,  
+			   FID as fid 
+		FROM ELECTED_PLEDGE
+	</select>
+ 	<select id="getElectedPledge" parameterType="String" resultType="ElectedPledge">
+		SELECT CAND_ID as cand_id , 
+			   PLEDGE_TITLE as pledge_title, 
+			   PLEDGE_ID as pledge_id ,
+			   PLEDGE_CONTENTS as pledge_contents ,
+			   PERFORMANCE_CHECK as performance_check,   
+			   PERFORMANCE_CONTENTS as performance_contents,  
+			   FID as fid 
+		FROM ELECTED_PLEDGE 
+		WHERE pledge_id = #{id}
+	</select>
+	
+	<select id="checkCandid" parameterType="PledgeParam" resultType="int" >
+		SELECT COUNT(*)  
+	    FROM PLEDGE 
+		WHERE CAND_ID = #{cand_id}
+	</select> 
+	<update id="updateElectedPledge" parameterType="ElectedPledge">
+		UPDATE ELECTED_PLEDGE 
+		SET PLEDGE_ID = #{pledge_id}
+		   ,PLEDGE_TITLE = #{pledge_title}
+		   ,PERFORMANCE_CHECK = #{performance_check}
+		   ,PLEDGE_CONTENTS = #{pledge_contents}
+		   ,PERFORMANCE_CONTENTS = #{performance_contents}
+		   ,FID = #{fid}
+		   ,UPD_DTTM = SYSDATE
+		   <!-- ,UPD_ID = #{} -->
+				   
+	</update>
+</mapper>

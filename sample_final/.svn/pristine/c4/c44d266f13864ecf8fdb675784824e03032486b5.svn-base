@@ -1,0 +1,44 @@
+package net.javabugs.web.example.model.dto;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import net.javabugs.web.common.mvc.model.vo.ParameterVO;
+
+public class CommentParam extends ParameterVO {
+	//
+	private String cmtNum;
+	@NotEmpty
+	private String number_bid;
+	@NotEmpty
+	@Length(max=200, min=10)
+	private String comment;
+	
+	
+
+	public String getCmtNum() {
+		return cmtNum;
+	}
+
+	public void setCmtNum(String cmtNum) {
+		this.cmtNum = cmtNum;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getNumber_bid() {
+		return number_bid;
+	}
+
+	public void setNumber_bid(String number_bid) {
+		this.number_bid = number_bid;
+	}
+	
+	
+}

@@ -1,0 +1,193 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/com/config.jsp" %>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<jsp:include page="/WEB-INF/view/com/meta.jsp" />
+	<jsp:include page="/WEB-INF/view/com/favicon.jsp" />
+	<jsp:include page="/WEB-INF/view/com/css.jsp" />
+	<jsp:include page="/WEB-INF/view/com/script.jsp" />
+	<title>candidateintroduce</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="<spring:url value="/css/view/layzilla.css"/>"/>
+	<link rel="stylesheet" type="text/css" href="<spring:url value="/css/view/candidateintroduce.css"/>"/>
+	
+	<script type="text/javascript">
+		 $(function() {
+			//$( "#tabs" ).tabs();
+			search();
+		});
+		 
+		function search(){
+			   $.get("<spring:url value="/candi/candidatesearch"/>"
+			         ,function(result){
+			            console.log("result.candiList : " + result.candiList);
+			            console.log("result.pledgeList : " + result.pledgeList);
+			            $(result.pledgeList).each(function(index,pledge){
+			            	console.log(pledge);
+			            });
+			            $("#candidatePhoto").html("");//이게 html을 비우는 거에요!
+			            $(result.candiList).each(function(index,candi){
+			               console.log("fid : " + candi.fid);
+			               var $div = $("<div style='float: left; width: 33%;'>");
+			               $div.append("<img src=\"../file/download/"+candi.fid+"\" style=\"width:100px; height:100px;\"/>");
+			               $div.append("</div>");
+			               $("#candidatePhoto").append($div); 
+			            });
+			            // $("#candidateName").html("");//이게 비우는거니깐 위의 사진들이 다사라지지
+			            $(result.candiList).each(function(index,candi){
+			              	console.log("user_name : " + candi.user_name +", cand_id : " + candi.cand_id);
+			              	var $div = $("<div style='float: left; width: 33%;'>");
+				            $div.append("기호 "+candi.cand_id+"번 " + candi.user_name);
+				            $div.append("</div>");
+				            $("#candidateName").append($div); 
+			            });
+			            $("#tabs").html("");
+			            var $ul = $("<ul>");
+			            $(result.candiList).each(function(index,candi){
+			            	//<li><a href="#tabs-1">공약1</a></li>
+			            	var id = "tabs-"+(index + 1);
+			            	var $li = $("<li>");
+			            	$li.append("<a href=#"+id+">"+"기호"+(index+1)+"번 "+candi.user_name+"</a>");
+			            	$ul.append($li);
+			            });
+			            $("#tabs").append($ul);
+			            
+			            $(result.candiList).each(function(index,candi){
+			            	var id = "tabs-"+(index + 1);
+			            	var $div = $("<div id = "+id+">");
+			            	$("#tabs").append($div);
+			            });
+			            
+			             $(result.pledgeList).each(function(index,pledge){
+			            	var id = "tabs-"+pledge.cand_id;
+			            	var $p = $("<p>");
+			            	$p.append(pledge.pledge_content);
+				            $("#"+id).append($p);
+			            }); 
+			            
+			             $("#tabs").tabs();
+			         /* $("#tabs").html("");
+			            $(result.candiList).each(function(index,candi){
+			            	//<li><a href="#tabs-1">공약1</a></li>
+			            	var id = "tabs-"+(index + 1);
+			            	var $a;
+			            	var li = "li-"+(index+1);
+			            	var cand_id = candi.cand_id;
+			             	switch(cand_id)
+			            	{
+			            	case 1:
+			            		$a = $("<a href=#"+id+">"+"기호"+(index+1)+"번 "+candi.user_name+"</a>");
+				            	$("tabs>ul>li[id=li]").append($a);
+				            	break;
+			            	case 2:
+			            		$a = $("<a href=#"+id+">"+"기호"+(index+1)+"번 "+candi.user_name+"</a>");
+			            		//2번째 li에 넣는다
+			            		//li의 visibility 스타일속성을 visible로 변경해준다. 
+			            		$("tabs>ul>li#li-"+cand_id).append($a);
+			            		$("#li-"+cand_id).attr("style","visibility:visible");
+			            		break;
+			            	default:
+			            		//일단 2번째 li를 복사해서 넣는다
+			            		//id를 li-3이런식으로 index에 추가한다.
+			            		//li를 비워준다.
+			            		//$a를 새로만들어서 li에 넣어준다. 
+				            }
+//			            	var $div = $("<div id = "+id+"></div>");
+//			            	$("#tabs").append($div);
+			            });
+			             $(result.pledgeList).each(function(index,pledge){
+			            
+			            	var id = "tabs-"+pledge.cand_id;
+			            	var $p = $("<p>"+pledge.pledge_content+"</p>");
+				            $("#"+id).append($p);
+			            }); */
+			         });
+			} 
+			$("#vote").bind("click",function(){
+				window.location.href="<spring:url value="/vote" />";
+			});
+	</script>
+</head>
+	
+	<body>
+		<div class="centered">
+			<div class="item">
+				<div>
+					<div  class="content">
+						<spring:message code="label.candi.introduce"/>
+					</div><!-- 후보자 소개 -->
+				</div>
+				<br/>
+				
+				<div>
+					<div id="candidateName" class="content">
+						<div>
+							<div id="candidatePhoto" class="content">
+								<!-- <div style="float: left; width: 33%;">사진1</div> -->
+								<!-- <div style="float: left; width: 33%;">사진2</div> -->
+								<!-- <div style="float: left; width: 33%;">사진3</div> -->
+							</div>
+						</div>
+						<!-- <div style="float: left; width: 33%;">기호1번 김진호</div> -->
+						<!-- <div style="float: left; width: 33%;">기호2번 염종철</div> -->
+						<!-- <div style="float: left; width: 33%;">기호3번 우리나</div> -->
+					</div>
+				</div>
+				<br/>
+				<br/>
+				
+				<div>
+					<div class="content">
+						<input name="vote" type="button" id="vote" value="투표하러 가기" />
+                        <!-- 투표하러가기 -->
+					</div>
+				</div>
+				<br/>
+				      
+				<div>
+					<div class="content">
+						<div>
+							<div class="content">
+								<strong>후보자&nbsp;상세 소개</strong>
+							</div>
+						</div>
+						<div style="float:left; width:40%;">
+							포스터 등록란
+						</div>
+						<div style="float:left; width:60%;">
+							<div>약력</div>
+							<div>불라불라</div>
+						<div>
+					</div>
+				</div>
+				<br/>
+				
+				<div>
+					<div id="tabs">
+						<!--  <ul>
+							<li><a href="#tabs-1">1</a></li>
+							<li><a href="#tabs-2">2</a></li>
+							<li><a href="#tabs-3">3</a></li>
+						</ul>
+						
+						<div id="tabs-1">
+							<p>후보자공약1</p>
+						</div>
+						<div id="tabs-2">
+							<p>후보자공약2</p>
+						</div>
+						<div id="tabs-3">
+							<p>후보자공약3</p>
+						</div> -->
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</body>
+</html>

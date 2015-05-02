@@ -1,0 +1,28 @@
+* {
+	margin:0px;
+	padding:0px;
+}
+.wrap{
+	width: 800px;
+	margin: auto;
+}
+
+.pledgeTitle {
+	background-color:#FFFFFF;/*공약제목 배경색*/
+	border:1px solid;
+	border-radius:10px; /*테두리 둥글기각*/
+	padding:10px; /*공약제목 안쪽여백*/
+	color:#black; /*공약제목 글자색*/
+	font-size:30px; /*공약제목 글자크기*/
+	font-weight:bold; /*공약제목 글자 진하게*/
+}
+.pledgeTitle:hover {
+	cursor: pointer;
+	background-color:#F5BCA9;
+}
+.pledgeContent {
+	padding:10px;
+	background-color: #CECEF6;
+	color:white;
+	border-radius:10px;
+}

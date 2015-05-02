@@ -1,0 +1,37 @@
+package net.javabugs.web.example.model.dto;
+
+public class Pledge {
+	
+	private String cand_id;
+	private String user_name;
+	private String pledge_id;
+	private String pledge_content;
+	
+	public String getCand_id() {
+		return cand_id;
+	}
+	public void setCand_id(String cand_id) {
+		this.cand_id = cand_id;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getPledge_id() {
+		return pledge_id;
+	}
+	public void setPledge_id(String pledge_id) {
+		this.pledge_id = pledge_id;
+	}
+	public String getPledge_content() {
+		return pledge_content;
+	}
+	public void setPledge_content(String pledge_content) {
+		this.pledge_content = pledge_content;
+	}
+	
+	
+
+}

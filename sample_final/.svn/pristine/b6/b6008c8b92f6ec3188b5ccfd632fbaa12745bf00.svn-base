@@ -1,0 +1,60 @@
+@page a4sheet { size: 21.0cm 29.7cm }
+.a4 { page: a4sheet; page-break-after: always; }
+
+.page {
+	/* width:650px; 
+	height:850px; */
+	border: 0px;
+}
+
+.company td,
+.order td,
+.footer td {
+	border: 1px #ccc solid;
+	padding: 5px;
+}
+
+table {
+	width: 100%;
+	border: 1px #ccc solid;
+	border-collapse: collapse;
+}
+
+td {
+	font-size: 0.9em;
+	line-height: 19px;
+}
+
+td.header {
+	font-size: 0.9em;
+}
+
+td.title {
+	text-align: center;
+	font-size: 24px;
+	line-height: 24px;
+	font-weight: bold;
+	letter-spacing: 7px;
+}
+
+td.title2 {
+	
+}
+
+.nowrap {
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis
+}
+
+.list-item {
+	font-size: 0.8em;
+}
+
+.list-item.cancel {
+	text-decoration: line-through;
+}
+
+.number {
+	text-align:right;
+}

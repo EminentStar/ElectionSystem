@@ -1,0 +1,215 @@
+<%@ include file="/WEB-INF/view/com/config.jsp" %>
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%> --%>
+<!doctype html>
+<html lang="ko">
+<head>
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+	<jsp:include page="/WEB-INF/view/com/meta.jsp" />
+	<jsp:include page="/WEB-INF/view/com/favicon.jsp" />
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="<spring:url value="/css/view/login-box.css" />">
+	<script type="text/javascript" src="<spring:url value="/js/com/extends.js"/>" ></script>
+	<script type="text/javascript">
+		window.onload = function() {
+			document.getElementById("login-box").style.margin = ((window.screen.height - 352) / 4) + 'px auto';
+			document.getElementById("login-box").style.display = 'block';
+			
+    		var errorCode = "${sessionScope.error}";
+    		<c:remove var="error" scope="session"/>
+    		var username = "${sessionScope['j_username']}";
+    		<c:remove var="j_username" scope="session"/>
+    		
+    		if (errorCode.trim().length > 0) {
+    			if (errorCode.trim() == "7000") {
+    				alert('<spring:message code="msg.alert.fail.login" />');
+    			} else {
+    				alert('<spring:message code="msg.alert.error.generic" />');
+    			}
+    		}
+			
+			//var form = document.getElementById("loginform");
+        	var userName = document.getElementById("j_username");
+        	var passwd = document.getElementById("j_password");
+			
+			userName.value = username;
+			userName.onkeypress = keyPressHandler;
+			passwd.onkeypress = keyPressHandler;
+		};
+		
+		function login() {
+        	var form = document.getElementById("loginform");
+        	var userName = document.getElementById("j_username");
+        	var passwd = document.getElementById("j_password");
+        	
+        	if (userName.value.trim().length == 0) {
+        		<spring:message code="label.num" var="label" />
+        		alert('<spring:message code="NotEmpty.general" arguments="${label}"/>');
+        		userName.focus();
+        		return false;
+        	} 
+        	
+        	if (passwd.value.trim().length == 0) {
+        		<spring:message code="label.login.password" var="label" />
+        		alert('<spring:message code="NotEmpty.general" arguments="${label}" />');
+        		passwd.focus();
+        		return false;
+        	} 
+        	
+        	form.submit();
+        }
+		
+		function keyPressHandler(e) {
+			var event = window.event ? window.event : e;
+			if(event.keyCode == 13) {
+				login();
+			}
+		}
+	</script>
+</head>
+<!-- <style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+</style>
+
+
+
+<body id="login">
+	<form id="loginform" action="j_spring_security_check" method="post">
+	<table width="700" align="center">
+	  <tr>
+	    <td width="50">&nbsp;</td>
+	    <td valign="top"><table width="100%">
+	      <tr>
+	        <td width="600" height="100" align="center" class="bold"><span class="bold">로그인</span></td>
+	      </tr>
+	      <tr>
+	        <td height="50">&nbsp;</td>
+	      </tr>
+	      <tr>
+	        <td valign="top"><table width="100%">
+	          <tr>
+	            <td width="30">&nbsp;</td>
+	            <td width="100">ID</td>
+	            <td width="30">&nbsp;</td>
+	            <td><form id="form1" name="form1" method="post" action="">
+	              <label for="Id입력창"></label>
+	              <input name="j_username" type="text" id="j_username" class="form-login" size="12" maxlength="12" />
+	            </form></td>
+	            <td>&nbsp;</td>
+	            <td>&nbsp;</td>
+	            <td>&nbsp;</td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td valign="top"><table width="100%">
+	          <tr>
+	            <td width="30">&nbsp;</td>
+	            <td width="100">Password</td>
+	            <td width="30">&nbsp;</td>
+	            <td><form id="form2" name="form1" method="post" action="">
+	              <label for="password입력창"></label>
+	              <input name="j_password" type="password" id="j_password" class="form-login" size="12" maxlength="12" />
+	            </form></td>
+	            <td>&nbsp;</td>
+	            <td>&nbsp;</td>
+	            <td>&nbsp;</td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td>&nbsp;</td>
+	      </tr>
+	      <tr>
+	        <td><form id="form3" name="form3" method="post" action="">
+	          <table width="100%">
+	            <tr>
+	              <td width="30">&nbsp;</td>
+	              <td width="100">&nbsp;</td>
+	              <td width="30">&nbsp;</td>
+	              <td><label for="Id입력창"></label>
+	                <input type="submit" name="button" id="button" value="로그인" /></td>
+	              <td>&nbsp;</td>
+	              <td>&nbsp;</td>
+	              <td>&nbsp;</td>
+	            </tr>
+	          </table>
+	        </form></td>
+	      </tr>
+	      <tr valign="top">
+	        <td><table width="100%">
+	          <tr>
+	            <td width="32">&nbsp;</td>
+	            <td width="299">학번/학번 관리자가 기억이 나지 않는다면 </td>
+	            <td width="134"><input type="submit" name="button2" id="button2" value="학번/비밀번호 찾기" /></td>
+	            <td width="91">를</td>
+	            </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td><table width="100%">
+	          <tr valign="top">
+	            <td width="30">&nbsp;</td>
+	            <td width="534"><form id="form4" name="form4" method="post" action="">
+	               클릭하세요 .
+	</form></td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td><table width="100%">
+	          <tr>
+	            <td width="30">&nbsp;</td>
+	            <td width="82"><form id="form5" name="form5" method="post" action="">
+	              ID가 없다면
+	            </form></td>
+	            <td width="425"><input type="submit" name="button3" id="button3" value="회원가입" />
+	을 클릭하세요. </td>
+	            <td width="19">&nbsp;</td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	    </table></td>
+	    <td width="50">&nbsp;</td>
+	  </tr>
+	</table>
+	</form>
+</body>
+</html> -->
+
+<body id="login">
+
+	<form id="loginform" action="j_spring_security_check" method="post">
+        <div id="align">
+            <div id="login-box">
+                <H2>Login</H2>
+                <spring:message code="msg.login.welcome"/>&nbsp;
+                <br />
+                <div id="login-box-name" style="margin-top:20px;"><spring:message code="label.login.id"/>:</div>
+    			<div id="login-box-field" style="margin-top:20px;">
+    				<input id="j_username" name="j_username" class="form-login" title="Username" value="" size="30" maxlength="30" />
+    			</div>
+                <div id="login-box-name"><spring:message code="label.login.password"/>:</div>
+    			<div id="login-box-field">
+    				<input id="j_password" name="j_password" type="password" class="form-login" title="Password" value="" size="30" maxlength="30" />
+    			</div>
+                <br />
+                <span class="login-box-options">
+    				<input type="checkbox" id="_spring_security_remember_me" name="_spring_security_remember_me" value="on" checked> <spring:message code="label.login.auto"/>
+    				<a href="<spring:url value="/join/index"/>" style="margin-left:30px;"><spring:message code="label.join"/></a>
+    				<!-- <a href="#springUrl('/join/findPwd')" style="margin-left:30px;">#springMessage("label.password.lost")</a> -->
+    			</span>
+                <br />
+                <br />
+                <a href="javascript:login();"><img src="<spring:url value="/img/login-btn.png"/>" width="103" height="42" style="margin-left:90px;" /></a>
+            </div>
+        </div>
+	</form>
+</body>
+</html>
+

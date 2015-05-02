@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Vote">
+
+<insert id="dovote" parameterType="VoteParam" >
+	<selectKey keyProperty="dept_code" order="BEFORE" resultType="java.lang.String" > 
+		
+		 	SELECT DEPT_CODE FROM USERS WHERE USER_ID=#{crtId}
+    </selectKey>
+		 INSERT INTO VOTE 
+		 ( USER_ID
+		   ,DEPT_CODE
+		   ,CAND_ID
+		   ,VOTE_TIME
+		 ) 
+		   VALUES 
+		  ( 
+		  	#{crtId} 
+		   ,#{dept_code}
+		   ,#{cand_id}
+		   ,SYSDATE
+		  ) 
+	
+	</insert>
+<select id="voterate" parameterType="VoteParam" resultType="Vote">
+	SELECT A.total  ,B.total_vote , ROUND((B.total_vote/A.total)*100,3) as rate
+	FROM (SELECT COUNT(*) as total FROM USERS) A,
+    	 (SELECT COUNT(*) as total_vote FROM VOTE) B
+</select>
+</mapper>

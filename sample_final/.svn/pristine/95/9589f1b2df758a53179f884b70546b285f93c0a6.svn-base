@@ -1,0 +1,17 @@
+package net.javabugs.web.example.model.dao;
+
+import java.util.List;
+
+import net.javabugs.web.example.model.dto.Pledge;
+import net.javabugs.web.example.model.dto.PledgeParam;
+
+public interface PledgeDAO {
+
+	public List<Pledge> getPledgeList(PledgeParam pledgeParam);
+	
+	public int getCountPledgeList(PledgeParam pledgeParam);
+
+	public Pledge getPledge(PledgeParam pledgeParam);
+
+
+}

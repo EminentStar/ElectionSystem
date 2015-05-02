@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Comment">
+<!-- 오라클은 대소문자를 안가리는데 디비마다 다르다 MYSQL은 가리게할수도잇고 안가리게할수도있따!  -->
+	<select id="getCommentList" parameterType="CommentParam" resultType="Comment">
+		SELECT NUM_BID as num_bid 
+			  ,CMT_NUM as cmtNum
+			  ,COMMENTS as comments
+			  ,CID as cid
+			  ,CRT_DTTM as crtDttm
+			  ,CRT_CID as crtCid
+			  ,UPD_DTTM as updDttm
+			  ,UPD_CID as updCid
+		  FROM COMMENTS 
+		 WHERE NUM_BID = #{num_bid}
+		 ORDER BY CMT_NUM ASC
+	</select>
+	
+	<delete id="deleteCommentByNum_bid" parameterType="java.lang.String">
+		DELETE FROM COMMENTS WHERE NUM_BID = #{num_bid}
+	</delete>
+	
+	<delete id="deleteComment" parameterType="java.lang.String">
+		DELETE FROM COMMENTS WHERE CMT_NUM = #{cmtNum}
+	</delete>
+	
+	<update id="updateComment" parameterType="Comment">
+		UPDATE COMMENTS 
+		SET COMMENTS = #{comments}
+			,UPD_DTTM = SYSDATE
+			,UPD_CID = #{updCid}
+		WHERE CMT_NUM = #{cmtNum}
+	</update>
+
+	<insert id="insertComment" parameterType="Comment">
+		INSERT INTO COMMENTS(
+		      NUM_BID
+			  ,CMT_NUM
+			  ,COMMENTS
+			  ,CID
+			  ,CRT_DTTM
+			  ,CRT_CID
+		)
+		VALUES(
+			#{num_bid}
+			,SEQ_COMMENTS.NEXTVAL
+			,#{comments}
+			,#{cid}
+			,SYSDATE
+			,#{crtCid}
+		)
+	</insert>
+
+<!-- public List<Comment> getCommentList(CommentParam commentParam);
+	
+	public int deleteComment(String cmtNum);
+	
+	public int updateComment(Comment comment);
+
+	public int insertComment(Comment comment); -->
+
+
+</mapper>

@@ -1,0 +1,144 @@
+package net.javabugs.web.example.model.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import net.javabugs.web.example.model.dao.FileDAO;
+import net.javabugs.web.example.model.dto.FileInfo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class FileDAOImpl extends JdbcDaoSupport implements FileDAO {
+	
+	@Autowired
+	public FileDAOImpl(DataSource dataSource){
+		setDataSource(dataSource);
+	}
+	
+	public FileInfo getFileInfo(String fid){ //dto�� FileInfo Ŭ������ ����ٴ�
+		
+		/*Context initCtx;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FileInfo fileInfo = null;
+		try{
+		initCtx = new InitialContext();
+		Context envCtx = (Context)initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
+		conn = ds.getConnection();*/
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT FID 	");
+		sql.append("	,FILENAME ");
+		sql.append("	,FILEPATH ");
+		sql.append("	FROM ATTACHED_FILE ");
+		sql.append("	WHERE FID = ? ");
+		
+//		pstmt = conn.prepareStatement(sql.toString());
+	
+//		List<String> params = new ArrayList<String>();
+
+//		params.add(paramMap.get("fid")[0]);
+		
+//		pstmt.setString(1, params.get(0));
+//		rs = pstmt.executeQuery();
+		return getJdbcTemplate().queryForObject(sql.toString(),
+				new Object[]{fid},
+				new RowMapper<FileInfo>(){
+				@Override
+					public FileInfo mapRow(ResultSet rs, int arg1)
+							throws SQLException {
+						FileInfo fileInfo = new FileInfo();
+						fileInfo.setFid(rs.getString("fid"));
+						fileInfo.setFilename(rs.getString("filename"));
+						fileInfo.setFilepath(rs.getString("filepath"));
+						return fileInfo;
+					}
+				
+		});
+		}
+	public FileInfo getSubFileInfo(String fid,String sub_fid){ //dto�� FileInfo Ŭ������ ����ٴ�
+		
+		/*Context initCtx;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FileInfo fileInfo = null;
+		try{
+		initCtx = new InitialContext();
+		Context envCtx = (Context)initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
+		conn = ds.getConnection();*/
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT FID 	");
+		sql.append(" 	, SUB_FID 	");
+		sql.append("	,FILENAME ");
+		sql.append("	,FILEPATH ");
+		sql.append("	FROM CANDIATTACHED_FILE ");
+		sql.append("	WHERE FID = ? AND SUB_FID = ? ");
+		
+//		pstmt = conn.prepareStatement(sql.toString());
+		
+//		List<String> params = new ArrayList<String>();
+		
+//		params.add(paramMap.get("fid")[0]);
+		
+//		pstmt.setString(1, params.get(0));
+//		rs = pstmt.executeQuery();
+		
+		return getJdbcTemplate().queryForObject(sql.toString(),
+				new Object[]{fid,sub_fid},
+				new RowMapper<FileInfo>(){
+			@Override
+			public FileInfo mapRow(ResultSet rs, int arg1)
+					throws SQLException {
+				FileInfo fileInfo = new FileInfo();
+				fileInfo.setSub_fid(rs.getString("sub_fid"));
+				fileInfo.setFid(rs.getString("fid"));
+				fileInfo.setFilename(rs.getString("filename"));
+				fileInfo.setFilepath(rs.getString("filepath"));
+				return fileInfo;
+			}
+			
+		});
+	}
+
+	
+	public FileInfo getCandiFileInfo(String fid) {
+		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT FID 	");
+		sql.append("	,FILENAME ");
+		sql.append("	,FILEPATH ");
+		sql.append("	FROM CANDIATTACHED_FILE ");
+		sql.append("	WHERE FID = ? ");
+		
+		
+		return getJdbcTemplate().queryForObject(sql.toString(),
+				new Object[]{fid},
+				new RowMapper<FileInfo>(){
+				@Override
+					public FileInfo mapRow(ResultSet rs, int arg1)
+							throws SQLException {
+						FileInfo fileInfo = new FileInfo();
+						fileInfo.setFid(rs.getString("fid"));
+						fileInfo.setFilename(rs.getString("filename"));
+						fileInfo.setFilepath(rs.getString("filepath"));
+						return fileInfo;
+					}
+				
+		});
+		
+	}
+}

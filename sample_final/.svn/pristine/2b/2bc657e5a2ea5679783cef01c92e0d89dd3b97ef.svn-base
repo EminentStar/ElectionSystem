@@ -1,0 +1,44 @@
+package net.javabugs.web.example.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import net.javabugs.web.example.model.dto.PledgeParam;
+import net.javabugs.web.example.service.PlegeService;
+import net.sf.json.JSONObject;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+@Controller
+@RequestMapping("/pledge")
+public class PledgeController {
+	
+	Logger logger = Logger.getLogger(this.getClass());
+	
+	@Autowired
+	private PlegeService pledgeService;
+
+	@RequestMapping("/pledgelist")
+	public String list(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		
+		SecurityContextImpl obj = (SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT");
+		obj.getAuthentication().getPrincipal();
+		
+		return "admin/pledgelist";
+	}
+	
+	@RequestMapping("/pledgesearch")
+	public @ResponseBody JSONObject search(PledgeParam plegeParam){
+		JSONObject json = pledgeService.getPlegeList(plegeParam);
+		return json;
+	}
+	
+
+}

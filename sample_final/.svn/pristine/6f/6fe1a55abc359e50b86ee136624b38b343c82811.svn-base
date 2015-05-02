@@ -1,0 +1,105 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>jQuery UI Accordion - Collapse content</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<jsp:include page="/WEB-INF/view/com/meta.jsp" />
+	<jsp:include page="/WEB-INF/view/com/favicon.jsp" />
+	<jsp:include page="/WEB-INF/view/com/css.jsp" />
+	<jsp:include page="/WEB-INF/view/com/script.jsp" />
+
+	<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" href="<spring:url value="/css/jquery/ui/demos.css"/>"/>
+	
+	<script type="text/javascript">
+	$(function() {
+	
+		var pledgeCnt = ${pledgeCnt};
+		
+		$("#accordion").html("");
+		for(var count=1;count<=pledgeCnt;count++){
+		$("#accordion").append("<h3 id=\"h"+count+"\">"); //ex) id is "h1"
+		//append is method to put completed tag in specific tag.
+		var $div = $("<div id=\"div" +count + "\">"); //ex) id is "div1"
+		//$div.append("<p id=\"p" +count + "\">");
+		console.log($div);
+		$("#accordion").append($div);
+		}
+	/* 	<h3>공약 1 불러오기</h3>
+		<div>
+			<p>내용 1 불러오기</p>
+		</div> */
+		search();
+		$( "#accordion" ).accordion({
+			collapsible: true
+		});
+		$( "input[type=submit], a, button" )
+	      .button()
+	      .click(function( event ) {
+	        event.preventDefault();
+	      });
+		
+		$("#modify").bind("click",function(){
+			alert("1");
+		});
+	});
+	function search(){
+		$.get("<spring:url value="/pledge/pledgechecklist"/>"
+			,function(result){
+			$(result.electedPledgeList).each(function(index,electedPledge){
+				console.log(electedPledge);
+				$("#h"+(index+1)).append(electedPledge.pledge_title);
+				$p = $("<p>");
+				$p.append(electedPledge.pledge_contents);
+				 if(electedPledge.performance_check==0){
+					$("#h"+(index+1)).append("<img src=\"<spring:url value='/img/not.png'/>\"/>");
+				}else{ //When single quotation is located in double quotation, Don't attached back slash. 
+					$("#h"+(index+1)).append("<img src=\"<spring:url value='/img/ok.png'/>\"/>");
+				} 
+				$("#div"+(index+1)).append($p);					
+				$("#div"+(index+1)).append(electedPledge.performance_contents);				
+			});
+		});
+	}
+	</script>
+</head>
+<body>
+	<jsp:include page="/WEB-INF/view/top.jsp" />
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<form name="modiform">
+	<input type="hidden" name="pledge_id" id="pledge_id"/>
+	<input type="hidden" name="pledge_title" id="pledge_title"/>
+	<input type="hidden" name="pledge_contents" id="pledge_contents"/>
+	<input type="hidden" name="performance_check" id="performance_check"/>
+	<input type="hidden" name="performance_contents" id="performance_contents" />
+	<input type="hidden" name="fid" id="fid" />
+</form>
+<div id="accordion">
+</div>
+<div align="right" style="float:left; width:100%">
+	<input type="submit" name="modify" id="modify" value="<spring:message code="label.update"/>" />
+</div>
+</body>
+</html>

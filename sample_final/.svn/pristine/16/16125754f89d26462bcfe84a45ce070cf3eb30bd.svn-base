@@ -1,0 +1,48 @@
+package net.javabugs.web.example.model.dto;
+
+public class Vote {
+	private String total;
+	private String total_vote;
+	private String rate;
+	private String cand_id;
+	private String user_name;
+	private String rates; //후보자별 득표율
+	
+	public String getCand_id() {
+		return cand_id;
+	}
+	public void setCand_id(String cand_id) {
+		this.cand_id = cand_id;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getRates() {
+		return rates;
+	}
+	public void setRates(String rates) {
+		this.rates = rates;
+	}
+	public String getTotal() {
+		return total;
+	}
+	public void setTotal(String total) {
+		this.total = total;
+	}
+	public String getTotal_vote() {
+		return total_vote;
+	}
+	public void setTotal_vote(String total_vote) {
+		this.total_vote = total_vote;
+	}
+	public String getRate() {
+		return rate;
+	}
+	public void setRate(String rate) {
+		this.rate = rate;
+	}
+
+}

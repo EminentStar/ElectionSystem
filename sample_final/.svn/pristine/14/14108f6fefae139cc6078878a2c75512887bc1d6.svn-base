@@ -1,0 +1,9 @@
+package net.javabugs.web.example.model.dao;
+
+import net.javabugs.web.example.model.dto.FileInfo;
+
+public interface FileDAO {
+	public FileInfo getFileInfo(String fid);
+	
+	
+}

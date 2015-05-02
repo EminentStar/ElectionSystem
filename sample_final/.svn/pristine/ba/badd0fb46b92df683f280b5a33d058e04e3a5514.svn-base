@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.File">
+
+
+	<select id="getCandiFileInfo" parameterType="String" resultType="FileInfo">
+	 SELECT FID
+	       
+	       , FILENAME
+	       , FILEPATH
+	 FROM CANDIATTACHED_FILE
+	 WHERE FID=#{fid} 
+	
+	</select>
+
+	<select id="getSubFileInfo" parameterType="Candi" resultType="FileInfo">
+	 SELECT FID
+	       , SUB_FID
+	       , FILENAME
+	       , FILEPATH
+	 FROM CANDIATTACHED_FILE
+	 WHERE FID=#{fid} and SUB_FID=#{sub_fid}
+	
+	</select>
+
+	<select id="getFileInfo" parameterType="String" resultType="FileInfo">
+	 	SELECT FID 
+		       ,FILENAME AS filename 
+		       ,FILEPATH AS filepath 
+		   FROM ATTACHED_FILE
+		  WHERE FID = #{fid} 
+	</select>
+
+	<insert id="insertAttachFile" parameterType="FileInfo">
+		<selectKey keyProperty="fid" order="BEFORE" resultType="java.lang.String">
+			SELECT ATTACHED_FILE_FID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO ATTACHED_FILE 
+		 ( 
+		   FID 
+		  ,SUB_FID
+		  ,FILENAME 
+		  ,FILEPATH 
+
+		 ) 
+		 VALUES 
+		 ( 
+		   #{fid}
+		  ,#{fid}
+		  ,#{filename}
+		  ,#{filepath}
+		 ) 	
+	</insert>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Candi">
+
+	<sql id = "selectCandiSql">
+		   C.CAND_ID, 
+		   C.USER_ID, 
+		   C.USER_NAME, 
+		   C.DEPT_CODE, 
+		   C.PROFILE, 
+		   U.USER_ID, 
+		   C.CRT_ID, 
+		   C.CRT_DTTM, 
+		   C.FID, 
+		   F.FILENAME, 
+		   F.FILEPATH
+	</sql>
+	<sql id = "fromCandiSql">
+		FROM CANDIDATE C INNER JOIN USERS U ON U.USER_ID = C.CRT_ID 
+				 LEFT OUTER JOIN ATTACHED_FILE F ON F.FID = C.FID
+	</sql>
+	<select id ="getCountCandiList" parameterType="CandiParam"  resultType="int" >
+		SELECT COUNT(*) AS totRowCnt
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+	</select>
+	<select id="getCandiList" parameterType="CandiParam" resultType="Candi">
+		SELECT CAND_ID as cand_id
+			  ,USER_ID as user_id
+			  ,USER_NAME as user_name
+			  ,PROFILE as profile 
+			  ,FID as fid 
+		FROM CANDIDATE
+		ORDER BY CAND_ID ASC
+	</select>
+	<select id="getCandi" parameterType="CandiParam" resultType="Candi">
+		SELECT
+		<include refid="net.javabugs.web.example.model.mapper.Candi.selectCandiSql"/>
+		<include refid="net.javabugs.web.example.model.mapper.Candi.fromCandiSql"/>
+		WHERE C.CAND_ID = #{cand_id}
+	
+	</select>
+	<delete id="deleteCandi" parameterType="CandiParam">
+		DELETE FROM CANDIDATE WHERE CAND_ID=#{cand_id}
+	</delete>
+	
+	<update id="updateCandi" parameterType="CandiParam">
+	UPDATE CANDIDATE SET
+		
+		USER_NAME=#{user_name}
+		,USER_ID=#{user_id}
+		,PROFILE=#{profile}
+		,UPD_ID = #{updId}
+		,UPD_DTTM =SYSDATE
+		
+	WHERE CAND_ID=#{cand_id}
+	   
+	
+	</update>
+	<insert id="insertCandi" parameterType="Candi">
+	INSERT INTO CANDIDATE
+	(
+	   CAND_ID
+	 , USER_NAME
+	 , USER_ID
+	 , PROFILE
+	 , FID
+	 , CRT_UID
+	 , CRT_DTTM
+
+	)
+	VALUES
+	(
+      #{cand_id}
+      ,#{user_name}
+      ,#{user_id}
+      ,#{profile}
+      ,#{fid, jdbcType=NUMERIC}
+      ,#{user_id}
+      ,SYSDATE
+	)		
+	</insert>
+	<select id="getCandidateIntroduce" parameterType="CandiParam" resultType="Candi">
+		SELECT C.CAND_ID as cand_id
+			  ,C.USER_ID as user_id
+			  ,C.USER_NAME as user_name
+			  ,C.PROFILE as profile 
+			  ,C.FID as fid 
+			  ,F.FILENAME as filename 
+			  ,F.FILEPATH as filepath 
+		FROM CANDIDATE C, ATTACHED_FILE F 
+		WHERE C.FID = F.FID 
+		ORDER BY C.CAND_ID ASC
+	</select>
+	<select id= "getPledgeList" resultType="Pledge">
+		SELECT C.CAND_ID  as cand_id , 
+			   C.USER_NAME as user_name, 
+			   P.PLEDGE_ID as pledge_id ,
+			   P.PLEDGE_CONTENTS as pledge_content 
+		<include refid="net.javabugs.web.example.model.mapper.Pledge.fromPledgeSql"/>		   
+	
+	</select>
+	<!-- <insert id="insertAttachFile" parameterType="Candi">
+		<selectKey keyProperty="fid" order</insert> -->
+</mapper>

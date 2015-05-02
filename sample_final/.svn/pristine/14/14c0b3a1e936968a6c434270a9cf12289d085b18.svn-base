@@ -1,0 +1,42 @@
+package net.javabugs.web.example.service;
+
+import java.util.List;
+
+import net.javabugs.web.example.model.dao.CandiDAO;
+import net.javabugs.web.example.model.dao.JoinDao;
+import net.javabugs.web.example.model.dto.Candi;
+import net.javabugs.web.example.model.dto.CandiParam;
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class VoteService {
+	@Autowired
+	private CandiDAO candiDAO;
+
+	public JSONObject getCandiList(CandiParam candiParam) {
+		// TODO Auto-generated method stub
+		
+			JSONObject json = new JSONObject();
+			List<Candi> voteList = null;
+			//여기서 count를 먼저얻어야한다
+			
+			int count = candiDAO.getCountCandiList(candiParam);
+			//Paging paging = new Paging(param.getCurrPageNo(),count);
+			//param.setFromRowNum(paging.getFromRowNum());
+			//param.setToRowNum(paging.getToRowNum());
+			
+			if(count>0){
+				voteList = candiDAO.getCandiList(candiParam);
+			}
+			
+			//json.accumulate("paging", paging);
+			json.accumulate("voteList", voteList);
+			
+			return json;
+		
+	}
+
+}

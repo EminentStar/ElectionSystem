@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+.comment-li{ /* inputComment안의 ul안의 li속성의 display를 inline으로 설정하겠다! */ 
+	display:inline;
+}
+.comment-ul{ /* inputComment안의 ul안의 li속성의 display를 inline으로 설정하겠다! */ 
+	height:px
+}
+#inputComment ul li span{ /* inputComment안의 ul안의 li span 속성의 vertical-align을 @#$@#$으로 설정하겠다! */ 
+	vertical-align: top;
+}
+
+.wide{
+	width:60%;
+}
+
+.wide textarea{
+	width:inherit;
+}
+
+img.button{
+	width: 36px;
+}
+
+img.button-small{
+	width: 24px;
+	cursor: pointer;
+	margin: 5px; 
+}

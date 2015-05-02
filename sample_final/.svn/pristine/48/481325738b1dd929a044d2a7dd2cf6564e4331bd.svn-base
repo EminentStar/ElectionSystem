@@ -1,0 +1,10 @@
+package net.javabugs.web.example.model.dao;
+
+import net.javabugs.web.example.model.dto.VoteParam;
+
+public interface VoteDAO {
+
+	int vote(VoteParam vote);
+	
+	
+}

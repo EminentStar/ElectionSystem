@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+
+.wrap {
+	width: 100%;
+}
+.middle {
+	width: 1000px;
+	background-color: #FFC;
+	margin: auto;
+}
+.top_wrap {
+	width: 100%;
+}
+.menu {
+	width: 100%;
+}
+.top {
+	width: 100%;
+	background-color: #FF4D4D;
+}
+
+
+
+body, div, ul, li {
+	margin:0;
+	padding:0;
+}
+
+ul {
+	list-style-type: none;
+}
+a {
+	color:#000;
+	text-decoration:none;
+}
+/* 메인메뉴 영역 */
+.menu>ul {
+	width:100%;
+	height:40px;
+	background:#b8e356;
+	padding-left: 15%;
+}
+/*주메뉴 상자*/
+.menu>ul>li {
+	float:left;
+	width:200px;
+	height:40px;
+	background:#b8e356;
+	position: relative;
+}
+.menu>ul>li>a {
+	display:block;
+	width:100%;
+	height:100%;
+	font:bold 18px/40px "맑은 고딕", arial;
+	text-align:center;
+	color:#fff;
+}
+.menu ul li a:hover {
+	color:#fff;
+	background:#a5cc52;
+}
+/* 서브메뉴 영역*/
+    .menu ul ul {
+	display:none;
+}
+.menu>ul>li:hover ul {
+	display:block;
+	width:200px;
+	height:30px;
+}
+.menu li li {
+	width:200px;
+	height:30px;
+	background-color:#FFFFE9;
+	text-align:left;
+}
+.menu li li a {
+	display:block;
+	width:100%;
+	height:100%;
+	color:black;
+	font:bold 13px/25px "맑은 고딕", arial;
+}
+.menu li li a:hover {
+	color:white;
+	background:#a5cc52;
+}
+.top center table tr td {
+	color: #FFF;
+	font-size: 90px;
+}

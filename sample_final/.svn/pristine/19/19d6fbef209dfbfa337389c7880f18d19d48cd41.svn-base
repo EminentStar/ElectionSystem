@@ -1,0 +1,25 @@
+package net.javabugs.web.example.model.dao;
+
+import java.util.List;
+
+import net.javabugs.web.example.model.dto.Candi;
+import net.javabugs.web.example.model.dto.CandiParam;
+import net.javabugs.web.example.model.dto.PostParam;
+
+public interface CandiDAO {
+	
+	public List<Candi> getCandiList(CandiParam candiparam);
+	
+	public int getCountCandiList(CandiParam candiparam);
+
+	public Candi getCandi(CandiParam candiParam);
+
+	public int deleteCandi(CandiParam candiParam);
+
+	public int updateCandi(CandiParam candiParam);
+
+	public int insertAttachFile(Candi candi);
+
+	public int insertCandi(Candi candi);
+
+}

@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<center>
+  <table width="700" border="1">
+    <tr>
+      <td width="140" bgcolor="#999999" align="center">후보자 기호</td>
+      <td width="70" align="left"><input name="candidateId" type="text" id="candidateId" size="4" /></td>
+      <td width="111" bgcolor="#999999" align="center">이름</td>
+      <td width="90" align="left"><input name="candidateId" type="text" id="candidateId" size="12" /></td>
+      <td width="111" bgcolor="#999999" align="center">학번</td>
+      <td width="88" align="left"><input name="candidateId" type="text" id="candidateId" size="12" /></td>
+    </tr>
+    <tr>
+      <td colspan="6">&nbsp;</td>
+    </tr>
+    <tr>
+      <td bgcolor="#999999" align="center">약력</td>
+      <td colspan="4"></td>
+      <td></td>
+    <tr>
+      <td height="200" colspan="6"><textarea name="profile" cols="89" rows="15" id="profile"></textarea></td>
+    </tr>
+    <tr>
+      <td colspan="2" bgcolor="#999999" align="center">후보자 이미지</td>
+      <td colspan="4" align="left"><input name="candidateImage" type="file" id="candidateImage"/></td>
+    </tr>
+    <tr>
+      <td colspan="2" bgcolor="#999999" align="center">후보자 포스터</td>
+      <td colspan="4" align="left"><input name="candidatePoster" type="file" id="candidatePoster" /></td>
+    </tr>
+    <tr align="right">
+      <td colspan="6"><input name="confirm" type="button" value="등록" />
+        <input name="list" type="button" value="목록" /></td>
+    </tr>
+  </table>
+</center>
+
+</body>
+</html>

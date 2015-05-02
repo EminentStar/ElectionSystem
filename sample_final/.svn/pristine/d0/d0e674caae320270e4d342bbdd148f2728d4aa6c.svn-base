@@ -1,0 +1,5 @@
+package net.javabugs.web.example.controller;
+
+public class VoteCandiRate {
+
+}
