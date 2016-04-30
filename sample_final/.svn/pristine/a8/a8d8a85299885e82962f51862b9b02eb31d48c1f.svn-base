@@ -1,5 +1,0 @@
-jdbc.datasource=jdbc/DataSource
-jdbc.driverClass=oracle.jdbc.OracleDriver
-jdbc.url=jdbc:oracle:thin:@210.107.228.144:1522:orcl
-jdbc.username=scott1
-jdbc.password=tiger1

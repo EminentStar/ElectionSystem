@@ -1,8 +1,0 @@
-package net.javabugs.web.example.model.dao;
-
-import net.javabugs.web.example.model.dto.JoinParam;
-
-public interface HomeDAO {
-
-	public JoinParam getUserInformation(String id);
-}
