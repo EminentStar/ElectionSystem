@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.Vote">
+
+<select id="checkUserid" parameterType="VoteParam" resultType="int" >
+	 SELECT COUNT(*)  
+     FROM VOTE   
+	 WHERE USER_ID = #{loginUserId}
+	</select> 
+
+<insert id="dovote" parameterType="VoteParam" >
+	<selectKey keyProperty="dept_code" order="BEFORE" resultType="java.lang.String" > 
+		
+		 	SELECT DEPT_CODE FROM USERS WHERE USER_ID=#{crtId}
+    </selectKey>
+		 INSERT INTO VOTE 
+		 ( USER_ID
+		   ,DEPT_CODE
+		   ,CAND_ID
+		   ,VOTE_TIME
+		 ) 
+		   VALUES 
+		  ( 
+		  	#{crtId} 
+		   ,#{dept_code}
+		   ,#{cand_id}
+		   ,SYSDATE
+		  ) 
+	
+	</insert>
+
+	
+	<select id ="voteresult" parameterType= "VoteParam" resultType="Vote">
+			SELECT A.CAND_ID as cand_id, C.USER_NAME as user_name, ROUND((A.F/B.P)*100,2) AS rates
+			FROM (SELECT CAND_ID,COUNT(CAND_ID) AS F FROM VOTE GROUP BY CAND_ID) A,
+      			(SELECT COUNT(*) AS P FROM VOTE) B,
+      			CANDIDATE C
+				WHERE A.CAND_ID = C.CAND_ID
+				ORDER BY cand_id ASC
+	</select>
+
+
+
+<select id="voterate" parameterType="VoteParam" resultType="Vote">
+	SELECT A.total  ,B.total_vote , ROUND((B.total_vote/A.total)*100,2) as rate
+	FROM (SELECT COUNT(*) as total FROM USERS) A,
+    	 (SELECT COUNT(*) as total_vote FROM VOTE) B
+</select>
+
+<select id="votecollegerate" parameterType="VoteParam" resultType="Vote">
+	SELECT  B. DEPT_CODE as votedeptcode, B.DEPT_NAME as votedeptname,B.COLLEGE_NAME as votecollegename, A.F as collegevotepeople ,ROUND((A.F/C.U)*100,2) collegevoterate 
+	FROM
+      (SELECT DEPT_CODE, COUNT(DEPT_CODE) AS F FROM VOTE GROUP BY DEPT_CODE) A LEFT OUTER JOIN 
+      (SELECT DEPT_CODE, COUNT(DEPT_CODE) AS U FROM USERS GROUP BY DEPT_CODE) C ON A.DEPT_CODE=C.DEPT_CODE RIGHT OUTER JOIN 
+      (SELECT D.DEPT_CODE, D.DEPT_NAME,C.COLLEGE_NAME FROM DEPARTMENT D, COLLEGE C WHERE D.COLLEGE_CODE=C.COLLEGE_CODE) B ON C.DEPT_CODE=B.DEPT_CODE
+</select>
+
+<select id="electedresult" parameterType="VoteParam" resultType="Vote">
+	SELECT C.cand_id, A.result, C.FID, C.USER_NAME, D.DEPT_NAME,C.PROFILE
+	FROM (SELECT CAND_ID, SUM(1) AS result FROM VOTE GROUP BY CAND_ID ORDER BY result DESC) A,
+     	CANDIDATE C , DEPARTMENT D
+	WHERE A.CAND_ID=C.CAND_ID AND C.DEPT_CODE=D.DEPT_CODE
+</select>
+
+<select id= "checkVoteTerm" resultType="java.lang.Integer">
+	SELECT 
+		STATUS 
+	FROM TERM_CHECK
+</select>
+
+<update id="updateTerm" parameterType="CheckParam">
+	UPDATE TERM_CHECK SET		
+		STATUS = #{activecheck} 
+	</update>
+</mapper>

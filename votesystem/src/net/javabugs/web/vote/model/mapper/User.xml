@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+<mapper namespace="net.javabugs.web.example.model.mapper.User">
+
+<select id ="getCountUserList" parameterType="JoinParam"  resultType="int" >
+		SELECT COUNT(*) AS totRowCnt
+		FROM USERS U INNER JOIN DEPARTMENT D ON  U.DEPT_CODE = D.DEPT_CODE 
+         LEFT JOIN AUTHORITIES A ON U.USER_ID = A.USERNAME
+		 <where>
+        	<if test="condition != 'null'">
+        		<foreach collection="condition" item="scondition" separator="OR">
+        			<choose>
+        				<when test="scondition == &quot;user_id&quot;">
+        					U.USER_ID LIKE '%' || #{conditionText} || '%'			
+        				</when>
+        				<when test="scondition == &quot;department&quot;">
+        					D.DEPT_NAME LIKE '%' || #{conditionText} || '%'     				
+        				</when>
+        				<when test="scondition == &quot;users_name&quot;">
+        					U.USERS_NAME LIKE '%' || #{conditionText} || '%'    				
+        				</when>
+        				<when test="scondition == &quot;authority&quot;">
+        					A.AUTHORITY LIKE '%' || UPPER(#{conditionText}) || '%'    				
+        				</when>       			
+        			</choose>      		
+        		</foreach>     	
+        	</if>       
+        </where>        
+</select>
+<select id="getCandiList" parameterType="CandiParam" resultType="Candi">
+		SELECT 
+			U.USER_ID,
+			U.USERS_NAME,
+			D.DEPT_NAME
+			
+		
+		FROM CANDIDATE
+</select>
+<!-- 이 구문의 이름은 getUserList이고 JoinParam타입의 파라미터를 가진다. 그리고 결과 데이터는 User에 저장된다. --> 
+      <select id = "getUserList" parameterType="JoinParam" resultType="Join">
+      SELECT U.USER_ID as user_id 
+         ,U.USERS_NAME as users_name
+         ,D.DEPT_NAME as dept_name  
+         ,U.CELL_PHONE as cell_phone 
+         ,A.AUTHORITY as authorities_code
+        FROM USERS U INNER JOIN DEPARTMENT D ON  U.DEPT_CODE = D.DEPT_CODE 
+         LEFT JOIN AUTHORITIES A ON U.USER_ID = A.USERNAME
+        <where>
+        	<if test="condition != 'null'">
+        		<foreach collection="condition" item="scondition" separator="OR">
+        			<choose>
+        				<when test="scondition == &quot;user_id&quot;">
+        					U.USER_ID LIKE '%' || #{conditionText} || '%'			
+        				</when>
+        				<when test="scondition == &quot;department&quot;">
+        					D.DEPT_NAME LIKE '%' || #{conditionText} || '%'     				
+        				</when>
+        				<when test="scondition == &quot;users_name&quot;">
+        					U.USERS_NAME LIKE '%' || #{conditionText} || '%'    				
+        				</when>
+        				<when test="scondition == &quot;authority&quot;">
+        					A.AUTHORITY LIKE '%' || UPPER(#{conditionText}) || '%'    				
+        				</when>       			
+        			</choose>   	
+        		</foreach>       	
+        	</if>       
+        </where>                    
+      </select> 
+      
+   <!-- 나중에 사용자 선택할 때 필요할듯   --> 
+   <!-- <select id = "getUser" parameterType="JoinParam" resultType="Join"> -->
+   
+   <update id="updateAuthority" parameterType="JoinParam">
+         UPDATE AUTHORITIES SET
+         AUTHORITY= #{authorities_code}
+         WHERE USERNAME = #{user_id}          
+   </update> 
+</mapper>

@@ -1,0 +1,323 @@
+.icon-add {
+	background-image: url(../../img/icons/add.gif) !important;
+}
+
+.icon-delete {
+	background-image: url(../../img/icons/delete.gif) !important;
+}
+
+.icon-modify {
+	background-image: url(../../img/icons/modify.png) !important;
+}
+
+.icon-option {
+	background-image: url(../../img/icons/plugin.png) !important;
+}
+
+.icon-order {
+	background-image: url(../../img/icons/order.png) !important;
+}
+
+.icon-confirm {
+	background-image: url(../../img/icons/confirm.png) !important;
+}
+
+.icon-arrival {
+	background-image: url(../../img/icons/home.png) !important;
+}
+
+.icon-shipping {
+	background-image: url(../../img/icons/delivery.png) !important;
+}
+
+.icon-loss {
+	background-image: url(../../img/icons/loss.png) !important;
+}
+
+.icon-injection {
+	background-image: url(../../img/icons/retort.png) !important;
+}
+
+.icon-excel {
+	background-image: url(../../img/icons/excel.png) !important;
+}
+
+.icon-print { 
+	background-image: url(../../img/icons/printer.png) !important; 
+}
+
+.icon-upload { 
+	background-image: url(../../img/icons/image_add.png) !important; 
+}
+
+.icon-save { 
+	background-image: url(../../img/icons/save.png) !important; 
+}
+
+.icon-erase { 
+	background-image: url(../../img/icons/erase.png) !important; 
+}
+
+.icon-find { 
+	background-image: url(../../img/icons/find.png) !important; 
+}
+
+.icon-redo { 
+	background-image: url(../../img/icons/redo.png) !important; 
+}
+
+.icon-remove { 
+	background-image: url(../../img/icons/remove.png) !important; 
+}
+
+.icon-approval {
+	background-image: url(../../img/icons/approval.png) !important; 
+}
+
+.icon-no {
+	background-image: url(../../img/icons/no.png) !important;
+}
+
+.icon-stamp {
+	background-image: url(../../img/icons/stamp.png) !important; 
+}
+
+.icon-refresh {
+	background-image: url(../../img/icons/refresh.png) !important; 
+}
+
+.icon-document {
+	background-image: url(../../img/icons/document.png) !important; 
+}
+
+.icon-mail { 
+	background-image: url(../../img/icons/mail.png) !important; 
+}
+
+.x-grid-alert > td {
+   background-color: #FF6A89 !important;
+}
+
+.x-grid-alert-selected > td {
+   background-color: #FFA0A0 !important;
+}
+
+.x-grid-warning> td {
+   background-color: #FFAF0A !important;
+}
+
+.x-grid-warning-selected> td {
+   background-color: #FACD87 !important;
+}
+
+.header a>img {
+	width: 140px;
+	height: 45px;
+}
+
+.header-left {
+	display: inline;
+	float: left;
+	font-size: 11px;
+}
+
+.header-right {
+	display: inline;
+	float: right;
+	font-size: 11px;
+}
+
+.header-menu {
+	display: inline;
+	color: #7A7272;
+	font-weight: bold;
+}
+
+.header-info {
+	text-align: right;
+	margin-top: 10px;
+	margin-right: 5px;
+	color: #7A7272;
+}
+
+.header-info strong {
+	font-weight: bold;
+	color: #8A82D2;
+}
+
+.header-info strong color {
+	color: #7A7272;
+}
+
+.header-right div.header-menu div {
+	display:inline;
+	cursor: pointer;
+	padding: 2px 5px 5px 5px;
+	line-height: 18px;
+}
+
+.header-right div > div:hover {
+	background-color:#DFDFDF;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	color:black;
+}
+
+.footer {
+	height: 47px;
+	text-overflow: ellipsis; 
+	overflow: visible;
+}
+
+.footer div.line {
+	float: left;
+	display: inline;
+	height: 45px;
+	margin-left: 5px;
+	font-size: 11px;
+	color: #7A7272;
+}
+
+.footer img {
+	width: 125px;
+	height: 45px;
+	margins: 1px 0 1px 0;	
+}
+
+.footer div.line > p {
+	margin-top: 5px; 
+	margin-left: 10px; 
+	/* letter-spacing: 1pt;
+	word-spacing: 1pt; */
+	line-height: 18px;
+}
+
+.footer div.line > p > span {
+	margin-right: 15px;
+}
+
+.grid-image {
+	width: 25px;
+	height: 25px;
+}
+
+.tooltip-image-viewer {
+	width: 300px;
+	height: 300px;
+	padding: 3px 3px 3px 3px;
+}
+
+.tooltip-image-viewer span {
+	font-weight: bold;
+}
+
+.tooltip-image-viewer img {
+	margin-top: 5px;
+	width: 100%;
+}
+
+.v-align-top {
+	vertical-align: top !important;
+}
+
+.rectangle-1px {
+	border: 1px !important;
+}
+
+.badge {
+	/* visibility: hidden; */
+	display: none;
+	
+  /* display: block; */
+  /* position: absolute; */
+  /* top: -12px;
+  right: 3px; */
+  top: 3px;
+  /* right: 145px; */
+  line-height: 16px;
+  height: 16px;
+  padding: 0 5px;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.25);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
+}
+.badge {
+  border-color: #30aae9;
+  background-color: #67c1ef;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #acddf6), color-stop(100%, #67c1ef));
+  background-image: -webkit-linear-gradient(top, #acddf6, #67c1ef);
+  background-image: -moz-linear-gradient(top, #acddf6, #67c1ef);
+  background-image: -ms-linear-gradient(top, #acddf6, #67c1ef);
+  background-image: -o-linear-gradient(top, #acddf6, #67c1ef);
+  background-image: linear-gradient(top, #acddf6, #67c1ef);
+}
+
+.badge.red {
+  border-color: #fa5a35;
+  background-color: #fa623f;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc9f8a), color-stop(100%, #fa623f));
+  background-image: -webkit-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: -moz-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: -ms-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: -o-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: linear-gradient(top, #fc9f8a, #fa623f);
+}
+
+.x-hide-display {
+   display:none;
+}
+
+.x-grid-center-icon {
+   display:block;
+   margin:0 auto;
+   text-align:center;
+   cursor: pointer;
+}
+
+.x-grid-row-summary .x-grid-cell-inner {
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.x-grid-injection-materials .x-grid-cell-inner {
+	color: grey;
+	font-size: 10px;
+}
+
+.x-grid-manufacturer-departments .x-grid-cell-inner {
+	color: grey;
+}
+
+.x-grid-checkbox-hide .x-grid-cell-inner .x-grid-row-checker {
+	display: none;
+}
+
+.x-form-trigger-wrap {
+	width: 100% !important;
+}
+
+.x-tool-modify-cellclick {
+    background-image: url(../../img/icons/edit_click.png) !important;
+}
+
+.x-tool-modify-celldblclick {
+    background-image: url(../../img/icons/edit_dblclick.png) !important;
+}
+
+.help {
+	width:inherit; 
+    overflow-y: hidden;
+    text-align:center; 
+    vertical-align:middle;
+    display:table-cell;
+}
+
+.notfound {
+	width:inherit;
+    display:inline-block;
+}

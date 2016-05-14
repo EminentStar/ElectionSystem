@@ -1,0 +1,16 @@
+@charset "utf-8";
+a:link {
+	font-family: "맑은 고딕";
+}
+a:active {
+	font-family: "맑은 고딕";
+}
+
+a:hover {
+	font-family: "맑은 고딕";
+	color: #EE829A;
+}
+
+a:visited {
+	font-family: "맑은 고딕";
+}

@@ -1,0 +1,98 @@
+.left-menu-list {
+    padding: 0 3px 0 3px;
+}
+
+.left-menu-list .item {
+    margin-top: 3px;
+    padding-left: 25px;
+    font-size: 11px;
+    line-height: 20px;
+    background-position: 5px;
+    border: 1px solid #fff;
+    color:#7A7272;
+    font-weight: bold;
+    border-top: thin;
+    border-top-style: dotted;
+    border-top-color: #DFE8F6;
+}
+
+.left-menu-list .subitem {
+	cursor: pointer;
+    margin-top: 3px;
+    padding-left: 30px;
+    font-size: 11px;
+    line-height: 20px;
+    background-position: 10px;
+    border: 1px solid #fff;
+}
+
+.left-menu-list .x-item-selected {
+    font-weight: bold;
+    color: #15428B;
+    background-color: #DFE8F6;
+    border: 1px dotted #A3BAE9;
+     
+}
+
+.left-menu-list-item-hover {
+    background-color:#eee !important;
+}
+
+.menu-icon-submenu {
+	background: url(../../img/icons/dot.png) no-repeat 0 2px;
+}
+
+.menu-icon-account {
+	background: url(../../img/icons/people.png) no-repeat 0 2px;
+}
+
+.menu-icon-category {
+	background: url(../../img/icons/category.png) no-repeat 0 2px;
+}
+
+.menu-icon-product {
+	background: url(../../img/icons/beaker.png) no-repeat 0 2px;
+}
+
+.menu-icon-order {
+	background: url(../../img/icons/order.png) no-repeat 0 2px;
+}
+
+.menu-icon-ordered {
+	background: url(../../img/icons/ordered.png) no-repeat 0 2px;
+}
+
+.menu-icon-inventory {
+	background: url(../../img/icons/inventory.png) no-repeat 0 2px;
+}
+
+.menu-icon-inventoryco {
+	background: url(../../img/icons/inventoryco.png) no-repeat 0 2px;
+}
+
+.menu-icon-delivery {
+	background: url(../../img/icons/delivery.png) no-repeat 0 2px;
+}
+
+.menu-icon-bbs {
+	background: url(../../img/icons/bbs.png) no-repeat 0 2px;
+}
+
+.menu-icon-organization {
+	background: url(../../img/icons/organization.png) no-repeat 0 2px;
+}
+
+.menu-icon-building {
+	background: url(../../img/icons/building.png) no-repeat 0 2px;
+}
+
+.menu-icon-injection {
+	background: url(../../img/icons/assembling.png) no-repeat 0 2px;
+}
+
+.menu-icon-cscenter {
+	background: url(../../img/icons/cscenter.png) no-repeat 0 2px;
+}
+.menu-icon-sms {
+	background: url(../../img/icons/sms.png) no-repeat 0 2px;
+}

@@ -1,0 +1,26 @@
+.textField {	background-color: #EBEBEB;
+	border: 1px solid #666;
+	height: 20px;
+	width: 150px;
+}
+.button{
+	font-family:"¸¼Àº °íµñ";
+	color:WHITE;
+	background-color:#FF6464;
+	
+}
+.basic-font{
+font-family:"¸¼Àº °íµñ";
+font-size:14pt;
+font-weight:bold;
+color:BLACK;
+}
+#join-font{
+font-family:"¸¼Àº °íµñ";
+font-size:14pt;
+font-weight:bold;
+color:black;
+}
+#title{
+font-size:25pt;
+}
